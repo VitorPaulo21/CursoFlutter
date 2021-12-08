@@ -41,43 +41,31 @@ class TransactionList extends StatelessWidget {
             itemBuilder: (ctx, index) {
               Transaction e = _transactions.elementAt(index);
               return Card(
-                child: Row(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: Text(
-                        "R\$ ${e.value.toStringAsFixed(2)}",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.purple,
+                elevation: 5,
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        foregroundColor: Colors.white,
+                        radius: 30,
+                        child: Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: FittedBox(
+                            child: Text(
+                              "R\$${e.value.toStringAsFixed(2)}",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                        color: Colors.purple,
-                        width: 2,
-                      )),
-                        padding: const EdgeInsets.all(10),
+                      title: Text(e.title),
+                      subtitle:
+                          Text(DateFormat("d/MMM/yy", "PT-BR").format(e.date)),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          e.title,
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                        Text(
-                          DateFormat("dd/MMM/yy", 'PT_BR').format(e.date),
-                          style:
-                              TextStyle(color: Colors.grey[600], fontSize: 14),
-                        )
-                      ],
-                    )
-                  ],
-            ),
-                );
+                  );
             })
       
     );
