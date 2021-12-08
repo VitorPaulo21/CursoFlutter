@@ -12,7 +12,7 @@ class Chart extends StatelessWidget {
     initializeDateFormatting();
   }
 
-  List<Map<String, Object>> get groupedTransactions {
+  List<Map<String, Object>> get _groupedTransactions {
     return List.generate(7, (index) {
       final DateTime weekDay = DateTime.now().subtract(Duration(days: index));
       final List<Transaction> filteredList =
@@ -27,8 +27,6 @@ class Chart extends StatelessWidget {
           : filteredList
               .map((e) => e.value)
               .reduce((value, element) => value + element);
-      print(DateFormat.E("PT-BR").format(weekDay)[0]);
-      print(totalSum);
 
       return {
         "day": DateFormat.E("PT-BR").format(weekDay)[0],
@@ -36,19 +34,33 @@ class Chart extends StatelessWidget {
       };
     });
   }
+
+  double get _weekTotalValue {
+    return _groupedTransactions.fold(
+        0.0,
+        (previousValue, element) =>
+            previousValue + (element["value"] as double));
+  }
   @override
   Widget build(BuildContext context) {
-    groupedTransactions;
+    _groupedTransactions;
     return Card(
+      elevation: 6,
       margin: const EdgeInsets.all(20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: groupedTransactions.reversed.map((e) {
-          return ChartBar(
-              weekDay: e["day"].toString(),
-              value: double.parse(e["value"].toString()),
-              percent: 0);
-        }).toList(),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: _groupedTransactions.reversed.map((e) {
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                  weekDay: e["day"].toString(),
+                  value: (e["value"] as double),
+                  percent: (e["value"] as double) / _weekTotalValue),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
