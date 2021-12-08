@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:expenses/Components/chart_bar.dart';
 import 'package:expenses/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -41,7 +42,13 @@ class Chart extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.all(20),
       child: Row(
-        children: [],
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: groupedTransactions.reversed.map((e) {
+          return ChartBar(
+              weekDay: e["day"].toString(),
+              value: double.parse(e["value"].toString()),
+              percent: 0);
+        }).toList(),
       ),
     );
   }
