@@ -8,8 +8,11 @@ class TransactionList extends StatelessWidget {
 
   TransactionList(this._transactions) {
     initializeDateFormatting();
+    _voidSortList();
   }
- 
+  void _voidSortList() {
+    _transactions.sort((trA, trB) => trB.date.day.compareTo(trA.date.day));
+  }
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -3,9 +3,14 @@ import 'dart:math';
 import 'package:expenses/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
-  void Function({required String title, required double value}) onSubmit;
+  void Function({
+    required String title,
+    required double value,
+    required DateTime date,
+  }) onSubmit;
 
   TransactionForm(this.onSubmit);
 
@@ -15,12 +20,18 @@ class TransactionForm extends StatefulWidget {
 
 class _TransactionFormState extends State<TransactionForm> {
   final TextEditingController _titleController = TextEditingController();
-
   final TextEditingController _valueController = TextEditingController();
+  DateTime? _pickedDate = null;
 
   _submitForm() {
     final String title = _titleController.text;
     final String value = _valueController.text;
+    late final DateTime date;
+    if (_pickedDate == null) {
+      date = DateTime.now();
+    } else {
+      date = _pickedDate!;
+    }
 
     if (title.isEmpty || value.isEmpty) {
       return;
@@ -29,7 +40,25 @@ class _TransactionFormState extends State<TransactionForm> {
     widget.onSubmit(
       title: _titleController.text,
       value: double.tryParse(_valueController.text) ?? 0.0,
+      date: date
     );
+  }
+
+  void _showDate() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate:
+          DateTime(DateTime.now().subtract(const Duration(days: 365 * 2)).year),
+      lastDate: DateTime.now(),
+    ).then((value) {
+      if (value == null) {
+        return;
+      }
+      setState(() {
+        _pickedDate = value;
+      });
+    });
   }
 
   @override
@@ -69,9 +98,13 @@ class _TransactionFormState extends State<TransactionForm> {
               height: 60,
               child: Row(
                 children: [
-                  const Text("Nenhuma data Selecionada!"),
+                   Expanded(
+                    child: Text(_pickedDate == null
+                        ? "Nenhuma data Selecionada!"
+                        : "Data Selecionada: ${DateFormat("dd/MM/yy", "PT-BR").format(_pickedDate!)}"),
+                  ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: _showDate,
                       child: const Text(
                         "Selecionar Data",
                         style: TextStyle(fontWeight: FontWeight.bold),
