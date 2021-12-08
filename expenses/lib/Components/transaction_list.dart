@@ -5,8 +5,9 @@ import 'package:intl/date_symbol_data_local.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> _transactions;
+  final Function(String) _onRemove;
 
-  TransactionList(this._transactions) {
+  TransactionList(this._transactions, this._onRemove) {
     initializeDateFormatting();
     _voidSortList();
   }
@@ -16,7 +17,7 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 300,
+        height: 430,
         child: _transactions.isEmpty
             ? Column(
                 children: [
@@ -67,6 +68,13 @@ class TransactionList extends StatelessWidget {
                       title: Text(e.title),
                       subtitle:
                           Text(DateFormat("d/MMM/yy", "PT-BR").format(e.date)),
+                          trailing: IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () {
+                          _onRemove(e.id);
+                        },
+                        color: Theme.of(context).colorScheme.error,
+                      ),
                     ),
                   );
             })

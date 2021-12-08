@@ -82,6 +82,12 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (_) => TransactionForm(_addTransaction));
   }
 
+  void _removeTranzaction(String id) {
+    setState(() {
+      _transactions.removeWhere((element) => element.id == id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Chart(_recentTransaction),
-            TransactionList(_recentTransaction),
+            TransactionList(_recentTransaction, _removeTranzaction),
           ],
         ),
       ),
