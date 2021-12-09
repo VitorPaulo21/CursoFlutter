@@ -27,11 +27,13 @@ class Banca extends StatelessWidget {
                 },
                 child: Row(
                   children: [
-                   const Text("Conta: ",
-                        style: TextStyle(
-                            fontFamily: "OpenSans",
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16)),
+                   const FittedBox(
+                      child: Text("Conta: ",
+                          style: TextStyle(
+                              fontFamily: "OpenSans",
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16)),
+                   ),
                           FittedBox(
                       child: Text("R\$${banca.toStringAsFixed(2)}",
                           style: TextStyle(
@@ -43,10 +45,12 @@ class Banca extends StatelessWidget {
                                 : Theme.of(context).colorScheme.primary,
                           )),
                           ),
-                    Icon(
-                      Icons.edit,
-                      color: Theme.of(context).colorScheme.primary,
-                      size: 16,
+                    FittedBox(
+                      child: Icon(
+                        Icons.edit,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 16,
+                      ),
                     )
                   ],
                 ),
@@ -54,17 +58,20 @@ class Banca extends StatelessWidget {
               Row(
                 children: [
                   const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      "Organizar por:",
-                      style: TextStyle(
-                        fontFamily: "OpenSans",
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                    padding: EdgeInsets.only(right: 8),
+                    child: FittedBox(
+                      child: Text(
+                        "Organizar por:",
+                        style: TextStyle(
+                          fontFamily: "OpenSans",
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                   DropdownButton<int>(
+                    
                     items: [
                       dropItem(
                           value: 0, text: "Data", icon: 1, context: context),
@@ -76,7 +83,7 @@ class Banca extends StatelessWidget {
                           value: 3, text: "Valor", icon: 0, context: context),
                     ],
                     value: position,
-                    icon: const Icon(Icons.arrow_drop_down),
+                    icon: const FittedBox(child: Icon(Icons.arrow_drop_down)),
                     elevation: 5,
                     onChanged: (pos) {
                       posChange(pos!);
@@ -107,15 +114,20 @@ class dropItem extends DropdownMenuItem<int> {
           value: value,
           child: Row(
             children: [
-              Text(
-                text,
-                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              FittedBox(
+                child: Text(
+                  text,
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.primary),
+                ),
               ),
-              Icon(
-                icon == 0
-                    ? Icons.arrow_upward_outlined
-                    : Icons.arrow_downward_outlined,
-                color: Theme.of(context).colorScheme.primary,
+              FittedBox(
+                child: Icon(
+                  icon == 0
+                      ? Icons.arrow_upward_outlined
+                      : Icons.arrow_downward_outlined,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               )
             ],
           ),

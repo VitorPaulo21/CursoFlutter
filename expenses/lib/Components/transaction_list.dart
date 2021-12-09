@@ -26,27 +26,35 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _transactions.isEmpty
-        ? Column(
+        ? LayoutBuilder(builder: (cntx, constrain) {
+            return Column(
             children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Nenhuma Tranzação cadrastrada",
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
               SizedBox(
-                height: 200,
+                  height: constrain.maxHeight * 0.05,
+              ),
+              Container(
+                  height: constrain.maxHeight * 0.065,
+                  child: FittedBox(
+                    child: Text(
+                      "Nenhuma Tranzação cadrastrada",
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                ),
+              ),
+                SizedBox(
+                  height: constrain.maxHeight * 0.05,
+                ),
+                SizedBox(
+                  height: constrain.maxHeight * 0.4,
                 child: Image.asset(
                   "assets/images/waiting.png",
                   fit: BoxFit.cover,
                 ),
               ),
             ],
-          )
+          );
+          })
+
         : ListView.builder(
             itemCount: _transactions.length,
             itemBuilder: (ctx, index) {

@@ -51,45 +51,50 @@ class Chart extends StatelessWidget {
     return LayoutBuilder(builder: (ctx, cont) {
       return Card(
         elevation: 6,
-        margin: const EdgeInsets.only(bottom: 10, left: 20, right: 20, top: 20),
+        margin: EdgeInsets.only(
+            bottom: cont.maxHeight * 0.05,
+            left: 20,
+            right: 20,
+            top: cont.maxHeight * 0.1),
         child: Padding(
           padding:
-              const EdgeInsets.only(bottom: 10, left: 10, right: 10, top: 0),
+              const EdgeInsets.only(bottom: 5, left: 10, right: 10, top: 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                height: cont.maxHeight * 0.1,
-                margin: const EdgeInsets.only(bottom: 8),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
-                child: FittedBox(
-                  child: Text(
-                    "R\$${_weekTotalValue.toStringAsFixed(2)}",
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                        fontFamily: "OpenSans",
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(100),
-                    bottomRight: Radius.circular(100),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey[400]!,
-                      offset: const Offset(0.0, 4.0), //(x,y)
-                      blurRadius: 4.0,
+              FittedBox(
+                child: Container(
+                  height: cont.maxHeight * 0.12,
+                  margin: const EdgeInsets.only(bottom: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+                  child: FittedBox(
+                    child: Text(
+                      "R\$${_weekTotalValue.toStringAsFixed(2)}",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontFamily: "OpenSans",
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold),
                     ),
-                  ],
+                  ),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(100),
+                      bottomRight: Radius.circular(100),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey[400]!,
+                        offset: const Offset(0.0, 4.0), //(x,y)
+                        blurRadius: 4.0,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                height: cont.maxHeight * 0.6,
+              Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: _groupedTransactions.reversed.map((e) {

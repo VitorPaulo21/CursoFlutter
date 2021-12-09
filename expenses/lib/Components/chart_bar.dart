@@ -13,14 +13,13 @@ class ChartBar extends StatelessWidget {
       return Column(
         children: [
           Container(
-            height: constrain.maxHeight * 0.1,
+            height: constrain.maxHeight * 0.13,
             child: FittedBox(
               child: Text(value.toStringAsFixed(2)),
             ),
           ),
-           SizedBox(
-            height: constrain.maxHeight * 0.05,
-          ),
+          SizedBox(
+            height: constrain.maxHeight * 0.05),
           Container(
             height: constrain.maxHeight * 0.6,
             width: 10,
@@ -45,10 +44,12 @@ class ChartBar extends StatelessWidget {
               ],
             ),
           ),
-           SizedBox(
+          SizedBox(
             height: constrain.maxHeight * 0.05,
           ),
-          FittedBox(child: Text(weekDay))
+          Container(
+              height: constrain.maxHeight * 0.13,
+              child: FittedBox(child: Text(weekDay)))
         ],
       );
     });

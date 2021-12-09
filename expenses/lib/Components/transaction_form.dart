@@ -97,16 +97,18 @@ class _TransactionFormState extends State<TransactionForm> {
               height: 60,
               child: Row(
                 children: [
-                   Expanded(
+                  Expanded(
                     child: Text(_pickedDate == null
                         ? "Nenhuma data Selecionada!"
                         : "Data Selecionada: ${DateFormat("dd/MM/yy", "PT-BR").format(_pickedDate!)}"),
                   ),
                   TextButton(
                       onPressed: _showDate,
-                      child: const Text(
-                        "Selecionar Data",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      child: const FittedBox(
+                        child: Text(
+                          "Selecionar Data",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ))
                 ],
               ),
@@ -120,9 +122,11 @@ class _TransactionFormState extends State<TransactionForm> {
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(90))),
-                  child: const Text(
-                    "Nova Trnsação",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  child: const FittedBox(
+                    child: Text(
+                      "Nova Trnsação",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
               ],
