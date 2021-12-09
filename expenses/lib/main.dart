@@ -129,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       textInputAction: TextInputAction.done,
                       controller: banca,
                       keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
+                         const TextInputType.numberWithOptions(decimal: true),
                       decoration: const InputDecoration(
                         hintText: "Novo valor em conta",
                       ),
@@ -161,8 +161,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    final AppBar appbar = AppBar(
+      elevation: 8,
+      shape: const ContinuousRectangleBorder(
+          borderRadius: BorderRadius.only(
+        bottomLeft: Radius.circular(90),
+        bottomRight: Radius.circular(90),
+      )),
         title: const Text(
           "Gastos Semanais",
         ),
@@ -173,22 +178,37 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               icon: const Icon(Icons.add))
         ],
-      ),
+      );
+
+    final double avaliableSpace = MediaQuery.of(context).size.height -
+        appbar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+    return Scaffold(
+      appBar: appbar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransaction),
-            Banca(
-              position: _filterPosition,
-              posChange: _changeFilter,
-              banca: _deltaBanca(),
-              setBanca: () {
-                _openBancaModal(context);
-              },
+            Container(
+              height: avaliableSpace * 0.29,
+              child: Chart(_recentTransaction),
             ),
-            TransactionList(
-                _recentTransaction, _removeTranzaction, _filterPosition),
+            Container(
+              height: avaliableSpace * 0.065,
+              child: Banca(
+                position: _filterPosition,
+                posChange: _changeFilter,
+                banca: _deltaBanca(),
+                setBanca: () {
+                  _openBancaModal(context);
+                },
+              ),
+            ),
+            Container(
+              height: avaliableSpace * 0.635,
+              child: TransactionList(
+                  _recentTransaction, _removeTranzaction, _filterPosition),
+            ),
           ],
         ),
       ),

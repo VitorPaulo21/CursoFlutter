@@ -44,62 +44,68 @@ class Chart extends StatelessWidget {
         (previousValue, element) =>
             previousValue + (element["value"] as double));
   }
+
   @override
   Widget build(BuildContext context) {
     _groupedTransactions;
-    return Card(
-      elevation: 6,
-      margin: const EdgeInsets.only(bottom: 10, left: 20, right: 20, top: 20),
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10, top: 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 8),
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
-              child: FittedBox(
-                child: Text(
-                  "R\$${_weekTotalValue.toStringAsFixed(2)}",
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                      fontFamily: "OpenSans",
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(100),
-                  bottomRight: Radius.circular(100),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey[400]!,
-                    offset: const Offset(0.0, 4.0), //(x,y)
-                    blurRadius: 4.0,
+    return LayoutBuilder(builder: (ctx, cont) {
+      return Card(
+        elevation: 6,
+        margin: const EdgeInsets.only(bottom: 10, left: 20, right: 20, top: 20),
+        child: Padding(
+          padding:
+              const EdgeInsets.only(bottom: 10, left: 10, right: 10, top: 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                height: cont.maxHeight * 0.1,
+                margin: const EdgeInsets.only(bottom: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+                child: FittedBox(
+                  child: Text(
+                    "R\$${_weekTotalValue.toStringAsFixed(2)}",
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        fontFamily: "OpenSans",
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold),
                   ),
-                ],
+                ),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(100),
+                    bottomRight: Radius.circular(100),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey[400]!,
+                      offset: const Offset(0.0, 4.0), //(x,y)
+                      blurRadius: 4.0,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: _groupedTransactions.reversed.map((e) {
-                return Flexible(
-                  fit: FlexFit.tight,
-                  child: ChartBar(
-                      weekDay: e["day"].toString(),
-                      value: (e["value"] as double),
-                      percent: _weekTotalValue == 0
-                          ? 0
-                          : (e["value"] as double) / _weekTotalValue),
-                );
-              }).toList(),
-            ),
-          ],
+              Container(
+                height: cont.maxHeight * 0.6,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: _groupedTransactions.reversed.map((e) {
+                    return ChartBar(
+                        weekDay: e["day"].toString(),
+                        value: (e["value"] as double),
+                        percent: _weekTotalValue == 0
+                            ? 0
+                            : (e["value"] as double) / _weekTotalValue);
+                  }).toList(),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

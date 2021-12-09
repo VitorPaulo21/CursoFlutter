@@ -14,79 +14,78 @@ class Banca extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            GestureDetector(
-              onTap: () {
-                setBanca();
-              },
-              child: Row(
-                children: [
-                  RichText(
-                      text: TextSpan(
-                          style: const TextStyle(color: Colors.black),
-                          children: [
-                        const TextSpan(
-                            text: "Conta: ",
-                            style: TextStyle(
-                                fontFamily: "OpenSans",
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16)),
-                        TextSpan(
-                            text: "R\$${banca.toStringAsFixed(2)}",
-                            style: TextStyle(
-                              fontFamily: "OpenSans",
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: banca < 0
-                                  ? Colors.red
-                                  : Theme.of(context).colorScheme.primary,
-                            )),
-                      ])),
-                  Icon(
-                    Icons.edit,
-                    color: Theme.of(context).colorScheme.primary,
-                    size: 16,
-                  )
-                ],
+      child: SizedBox(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  setBanca();
+                },
+                child: Row(
+                  children: [
+                   const Text("Conta: ",
+                        style: TextStyle(
+                            fontFamily: "OpenSans",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16)),
+                          FittedBox(
+                      child: Text("R\$${banca.toStringAsFixed(2)}",
+                          style: TextStyle(
+                            fontFamily: "OpenSans",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: banca < 0
+                                ? Colors.red
+                                : Theme.of(context).colorScheme.primary,
+                          )),
+                          ),
+                    Icon(
+                      Icons.edit,
+                      color: Theme.of(context).colorScheme.primary,
+                      size: 16,
+                    )
+                  ],
+                ),
               ),
-            ),
-            Row(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  child: Text(
-                    "Organizar por:",
-                    style: TextStyle(
-                      fontFamily: "OpenSans",
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+              Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      "Organizar por:",
+                      style: TextStyle(
+                        fontFamily: "OpenSans",
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-                DropdownButton<int>(
-                  items: [
-                    dropItem(value: 0, text: "Data", icon: 1, context: context),
-                    dropItem(value: 1, text: "Data", icon: 0, context: context),
-                    dropItem(
-                        value: 2, text: "Valor", icon: 1, context: context),
-                    dropItem(
-                        value: 3, text: "Valor", icon: 0, context: context),
-                  ],
-                  value: position,
-                  icon: const Icon(Icons.arrow_drop_down),
-                  elevation: 5,
-                  onChanged: (pos) {
-                    posChange(pos!);
-                  },
-                ),
-              ],
-            ),
-          ],
+                  DropdownButton<int>(
+                    items: [
+                      dropItem(
+                          value: 0, text: "Data", icon: 1, context: context),
+                      dropItem(
+                          value: 1, text: "Data", icon: 0, context: context),
+                      dropItem(
+                          value: 2, text: "Valor", icon: 1, context: context),
+                      dropItem(
+                          value: 3, text: "Valor", icon: 0, context: context),
+                    ],
+                    value: position,
+                    icon: const Icon(Icons.arrow_drop_down),
+                    elevation: 5,
+                    onChanged: (pos) {
+                      posChange(pos!);
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
