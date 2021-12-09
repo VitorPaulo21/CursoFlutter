@@ -6,13 +6,22 @@ import 'package:intl/date_symbol_data_local.dart';
 class TransactionList extends StatelessWidget {
   final List<Transaction> _transactions;
   final Function(String) _onRemove;
+  final int _filterPosition;
 
-  TransactionList(this._transactions, this._onRemove) {
+  TransactionList(this._transactions, this._onRemove, this._filterPosition) {
     initializeDateFormatting();
     _voidSortList();
   }
   void _voidSortList() {
-    _transactions.sort((trA, trB) => trB.date.day.compareTo(trA.date.day));
+    if (_filterPosition == 0) {
+      _transactions.sort((trA, trB) => trB.date.compareTo(trA.date));
+    } else if (_filterPosition == 1) {
+      _transactions.sort((trA, trB) => trA.date.compareTo(trB.date));
+    } else if (_filterPosition == 2) {
+      _transactions.sort((trA, trB) => trB.value.compareTo(trA.value));
+    } else if (_filterPosition == 3) {
+      _transactions.sort((trA, trB) => trA.value.compareTo(trB.value));
+    }
   }
   @override
   Widget build(BuildContext context) {

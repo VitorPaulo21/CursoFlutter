@@ -64,7 +64,6 @@ class _TransactionFormState extends State<TransactionForm> {
   @override
   Widget build(BuildContext context) {
 
-     
     return Card(
       child: Padding(
         padding: const EdgeInsets.only(
