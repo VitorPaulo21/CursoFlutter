@@ -65,7 +65,8 @@ class _TransactionFormState extends State<TransactionForm> {
   Widget build(BuildContext context) {
 
     return Card(
-      child: Padding(
+      child: LayoutBuilder(builder: (cntx, constrain) {
+      return Padding(
         padding: const EdgeInsets.only(
           left: 10,
           right: 10,
@@ -74,30 +75,44 @@ class _TransactionFormState extends State<TransactionForm> {
         child: Column(
           // mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(
-              autofocus: true,
-              textInputAction: TextInputAction.next,
-              controller: _titleController,
-              decoration: const InputDecoration(labelText: "Titulo"),
-            ),
-            TextField(
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r'^[\.\d]+')),
-                FilteringTextInputFormatter.deny(RegExp(r'\..*\.'),
-                    replacementString: "."),
-              ],
-              controller: _valueController,
-              autofocus: true,
-              onSubmitted: (text) => _submitForm(),
-              decoration: const InputDecoration(labelText: "Valor R\$"),
+            Container(
+              height: constrain.maxHeight * 0.5,
+              child: Column(
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: TextField(
+                      autofocus: true,
+                      textInputAction: TextInputAction.next,
+                      controller: _titleController,
+                      decoration: const InputDecoration(labelText: "Titulo"),
+                    ),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: TextField(
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'^[\.\d]+')),
+                        FilteringTextInputFormatter.deny(RegExp(r'\..*\.'),
+                            replacementString: "."),
+                      ],
+                      controller: _valueController,
+                      autofocus: true,
+                      onSubmitted: (text) => _submitForm(),
+                      decoration: const InputDecoration(labelText: "Valor R\$"),
+                    ),
+                  ),
+                ],
+              ),
             ),
             Container(
-              height: 60,
+              height: constrain.maxHeight * 0.2,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
+                  FittedBox(
                     child: Text(_pickedDate == null
                         ? "Nenhuma data Selecionada!"
                         : "Data Selecionada: ${DateFormat("dd/MM/yy", "PT-BR").format(_pickedDate!)}"),
@@ -116,16 +131,19 @@ class _TransactionFormState extends State<TransactionForm> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                ElevatedButton(
-                  autofocus: true,
-                  onPressed: _submitForm,
-                  style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(90))),
-                  child: const FittedBox(
-                    child: Text(
-                      "Nova Trnsação",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                Container(
+                  height: constrain.maxHeight * 0.1,
+                  child: ElevatedButton(
+                    autofocus: true,
+                    onPressed: _submitForm,
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(90))),
+                    child: const FittedBox(
+                      child: Text(
+                        "Nova Trnsação",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
@@ -133,7 +151,8 @@ class _TransactionFormState extends State<TransactionForm> {
             ),
           ],
         ),
-      ),
+      );
+    })
     );
   }
 }
