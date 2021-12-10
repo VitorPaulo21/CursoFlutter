@@ -67,39 +67,38 @@ class Chart extends StatelessWidget {
               MediaQuery.of(context).orientation == Orientation.landscape &&
                       !isTablet
                   ? Container()
-                  :
-              FittedBox(
-                child: Container(
-                  height: cont.maxHeight * 0.12,
-                  margin: const EdgeInsets.only(bottom: 8),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
-                  child: FittedBox(
-                    child: Text(
-                      "R\$${_weekTotalValue.toStringAsFixed(2)}",
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                          fontFamily: "OpenSans",
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(100),
-                      bottomRight: Radius.circular(100),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey[400]!,
-                        offset: const Offset(0.0, 4.0), //(x,y)
-                        blurRadius: 4.0,
+                  : FittedBox(
+                      child: Container(
+                        height: cont.maxHeight * 0.12,
+                        margin: const EdgeInsets.only(bottom: 8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 0),
+                        child: FittedBox(
+                          child: Text(
+                            "R\$${_weekTotalValue.toStringAsFixed(2)}",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                                fontFamily: "OpenSans",
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(100),
+                            bottomRight: Radius.circular(100),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey[400]!,
+                              offset: const Offset(0.0, 4.0), //(x,y)
+                              blurRadius: 4.0,
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
+                    ),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MediaQuery.of(context).orientation ==
@@ -107,17 +106,19 @@ class Chart extends StatelessWidget {
                       ? MainAxisAlignment.center
                       : MainAxisAlignment.spaceAround,
                   children: _groupedTransactions.reversed.map((e) {
-                    return Padding(
-                      padding: MediaQuery.of(context).orientation ==
-                              Orientation.landscape
-                          ? EdgeInsets.only(left: 10, right: 10, top: 5)
-                          : EdgeInsets.all(0),
-                      child: ChartBar(
-                          weekDay: e["day"].toString(),
-                          value: (e["value"] as double),
-                          percent: _weekTotalValue == 0
-                              ? 0
-                              : (e["value"] as double) / _weekTotalValue),
+                    return Expanded(
+                      child: Padding(
+                        padding: MediaQuery.of(context).orientation ==
+                                Orientation.landscape
+                            ? EdgeInsets.only(left: 10, right: 10, top: 5)
+                            : EdgeInsets.all(0),
+                        child: ChartBar(
+                            weekDay: e["day"].toString(),
+                            value: (e["value"] as double),
+                            percent: _weekTotalValue == 0
+                                ? 0
+                                : (e["value"] as double) / _weekTotalValue),
+                      ),
                     );
                   }).toList(),
                 ),
