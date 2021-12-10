@@ -194,18 +194,21 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Chart(_recentTransaction),
             ),
             Container(
-              height: avaliableSpace * 0.065,
-              child: Banca(
-                position: _filterPosition,
-                posChange: _changeFilter,
-                banca: _deltaBanca(),
-                setBanca: () {
-                  _openBancaModal(context);
-                },
+              height: avaliableSpace * 0.1,
+              child: Flexible(
+                fit: FlexFit.tight,
+                child: Banca(
+                  position: _filterPosition,
+                  posChange: _changeFilter,
+                  banca: _deltaBanca(),
+                  setBanca: () {
+                    _openBancaModal(context);
+                  },
+                ),
               ),
             ),
             Container(
-              height: avaliableSpace * 0.635,
+              height: avaliableSpace * 0.6,
               child: TransactionList(
                   _recentTransaction, _removeTranzaction, _filterPosition),
             ),

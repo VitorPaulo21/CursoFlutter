@@ -62,6 +62,9 @@ class Chart extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              MediaQuery.of(context).orientation == Orientation.landscape
+                  ? Container()
+                  :
               FittedBox(
                 child: Container(
                   height: cont.maxHeight * 0.12,
@@ -96,14 +99,23 @@ class Chart extends StatelessWidget {
               ),
               Expanded(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MediaQuery.of(context).orientation ==
+                          Orientation.landscape
+                      ? MainAxisAlignment.center
+                      : MainAxisAlignment.spaceAround,
                   children: _groupedTransactions.reversed.map((e) {
-                    return ChartBar(
-                        weekDay: e["day"].toString(),
-                        value: (e["value"] as double),
-                        percent: _weekTotalValue == 0
-                            ? 0
-                            : (e["value"] as double) / _weekTotalValue);
+                    return Padding(
+                      padding: MediaQuery.of(context).orientation ==
+                              Orientation.landscape
+                          ? EdgeInsets.only(left: 10, right: 10, top: 5)
+                          : EdgeInsets.all(0),
+                      child: ChartBar(
+                          weekDay: e["day"].toString(),
+                          value: (e["value"] as double),
+                          percent: _weekTotalValue == 0
+                              ? 0
+                              : (e["value"] as double) / _weekTotalValue),
+                    );
                   }).toList(),
                 ),
               ),
