@@ -66,90 +66,101 @@ class _TransactionFormState extends State<TransactionForm> {
 
     return Card(
       child: LayoutBuilder(builder: (cntx, constrain) {
-      return Padding(
-        padding: const EdgeInsets.only(
-          left: 10,
-          right: 10,
-          // bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: Column(
-          // mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              height: constrain.maxHeight * 0.5,
-              child: Column(
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: TextField(
-                      autofocus: true,
-                      textInputAction: TextInputAction.next,
-                      controller: _titleController,
-                      decoration: const InputDecoration(labelText: "Titulo"),
-                    ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: TextField(
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'^[\.\d]+')),
-                        FilteringTextInputFormatter.deny(RegExp(r'\..*\.'),
-                            replacementString: "."),
-                      ],
-                      controller: _valueController,
-                      autofocus: true,
-                      onSubmitted: (text) => _submitForm(),
-                      decoration: const InputDecoration(labelText: "Valor R\$"),
-                    ),
-                  ),
-                ],
-              ),
+      return Container(
+        height: constrain.maxHeight,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 10,
+              right: 10,
+              // bottom: MediaQuery.of(context).viewInsets.bottom,
             ),
-            Container(
-              height: constrain.maxHeight * 0.2,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FittedBox(
-                    child: Text(_pickedDate == null
-                        ? "Nenhuma data Selecionada!"
-                        : "Data Selecionada: ${DateFormat("dd/MM/yy", "PT-BR").format(_pickedDate!)}"),
-                  ),
-                  TextButton(
-                      onPressed: _showDate,
-                      child: const FittedBox(
-                        child: Text(
-                          "Selecionar Data",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ))
-                ],
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+            child: Column(
+              // mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  height: constrain.maxHeight * 0.1,
-                  child: ElevatedButton(
-                    autofocus: true,
-                    onPressed: _submitForm,
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(90))),
-                    child: const FittedBox(
-                      child: Text(
-                        "Nova Trnsação",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                  height: constrain.maxHeight * 0.5,
+                  child: Column(
+                    children: [
+                      Flexible(
+                        flex: 1,
+                        child: TextField(
+                          autofocus: true,
+                          textInputAction: TextInputAction.next,
+                          controller: _titleController,
+                          decoration:
+                              const InputDecoration(labelText: "Titulo"),
+                        ),
                       ),
-                    ),
+                      Flexible(
+                        flex: 1,
+                        child: TextField(
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^[\.\d]+')),
+                            FilteringTextInputFormatter.deny(RegExp(r'\..*\.'),
+                                replacementString: "."),
+                          ],
+                          controller: _valueController,
+                          autofocus: true,
+                          onSubmitted: (text) => _submitForm(),
+                          decoration:
+                              const InputDecoration(labelText: "Valor R\$"),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+                Container(
+                  height: constrain.maxHeight * 0.2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      FittedBox(
+                        child: Text(_pickedDate == null
+                            ? "Nenhuma data Selecionada!"
+                            : "Data Selecionada: ${DateFormat("dd/MM/yy", "PT-BR").format(_pickedDate!)}"),
+                      ),
+                      TextButton(
+                          onPressed: _showDate,
+                          child: const FittedBox(
+                            child: Text(
+                              "Selecionar Data",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ))
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      height: constrain.maxHeight * 0.1,
+                      child: ElevatedButton(
+                        autofocus: true,
+                        onPressed: _submitForm,
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(90))),
+                        child: const FittedBox(
+                          child: Text(
+                            "Nova Trnsação",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom))
               ],
             ),
-          ],
+          ),
         ),
       );
     })

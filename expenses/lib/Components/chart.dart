@@ -4,6 +4,7 @@ import 'package:expenses/Components/chart_bar.dart';
 import 'package:expenses/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
@@ -47,6 +48,7 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isTablet = Device.get().isTablet;
     _groupedTransactions;
     return LayoutBuilder(builder: (ctx, cont) {
       return Card(
@@ -62,7 +64,8 @@ class Chart extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              MediaQuery.of(context).orientation == Orientation.landscape
+              MediaQuery.of(context).orientation == Orientation.landscape &&
+                      !isTablet
                   ? Container()
                   :
               FittedBox(
