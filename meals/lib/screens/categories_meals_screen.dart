@@ -1,37 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:meals/components/meal_item.dart';
+import 'package:meals/data/dummy_data.dart';
 import 'package:meals/models/category.dart';
+import 'package:meals/models/meal.dart';
 
-class CategoriesMealsScreen extends StatefulWidget {
-  final Category category;
-  const CategoriesMealsScreen(this.category, {Key? key}) : super(key: key);
+class CategoriesMealsScreen extends StatelessWidget {
+  const CategoriesMealsScreen({Key? key}) : super(key: key);
 
-  @override
-  State<CategoriesMealsScreen> createState() => _CategoriesMealsScreenState();
-}
-
-
-class _CategoriesMealsScreenState extends State<CategoriesMealsScreen> {
-@override
-void initState(){
-  print("iniciando");
-}
-@override
-void dispose(){
-  super.dispose();
-  print("fechando");
-}
   @override
   Widget build(BuildContext context) {
+  final Category category = ModalRoute.of(context)!.settings.arguments as Category;
+  final List<Meal> meals = DUMMY_MEALS.where((meal) {
+    return meal.categories.contains(category.id);
+    }).toList();
     
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(widget.category.title),
+        title: Text(category.title),
       ),
-      body: Container(
-        alignment: Alignment.center,
-        child: const Text("Receitas por Categoria"),
-      ),
-    );
+      body: ListView.builder(
+        itemCount: meals.length,
+        itemBuilder: (ctx, index) => MealItem(meals[index]),
+    ));
   }
 }

@@ -7,6 +7,8 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Vamos Cozinhar?"),
@@ -15,7 +17,10 @@ class CategoriesScreen extends StatelessWidget {
       body: GridView(
         padding: const EdgeInsets.all(25),
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: MediaQuery.of(context).size.width / 2,
+            maxCrossAxisExtent: isPortrait
+                ? MediaQuery.of(context).size.width / 2
+                : MediaQuery.of(context).size.width /
+                    (DUMMY_CATEGORIES.length / 3),
             childAspectRatio: 3 / 2,
             crossAxisSpacing: 20,
             mainAxisSpacing: 20),
