@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
 
-class MealDetailsScreen extends StatelessWidget {
+class MealDetailsScreen extends StatefulWidget {
   const MealDetailsScreen({Key? key}) : super(key: key);
+
+  @override
+  State<MealDetailsScreen> createState() => _MealDetailsScreenState();
+}
+
+class _MealDetailsScreenState extends State<MealDetailsScreen> {
+  bool _isFavorite = false;
   Widget _titlegenerator(BuildContext context, String title) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -26,7 +33,11 @@ class MealDetailsScreen extends StatelessWidget {
       child: child,
     );
   }
-
+  void _changeFavorite(){
+    setState(() {
+      _isFavorite = !_isFavorite;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     final Meal meal = ModalRoute.of(context)!.settings.arguments as Meal;
@@ -76,6 +87,11 @@ class MealDetailsScreen extends StatelessWidget {
               ],
             ),
           ),
-        ));
+      ),
+      floatingActionButton: FloatingActionButton(onPressed: _changeFavorite, 
+      child: _isFavorite 
+      ?const Icon(Icons.favorite,) 
+      :const Icon(Icons.favorite_outline,),),
+    );
   }
 }
