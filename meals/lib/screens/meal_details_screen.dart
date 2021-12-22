@@ -2,14 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
 
 class MealDetailsScreen extends StatefulWidget {
-  const MealDetailsScreen({Key? key}) : super(key: key);
+  final Function(Meal) _toggleFavorite;
+  final bool Function(Meal) _isFavorite;
+  const MealDetailsScreen(this._toggleFavorite, this._isFavorite, {Key? key})
+      : super(key: key);
 
   @override
   State<MealDetailsScreen> createState() => _MealDetailsScreenState();
 }
 
 class _MealDetailsScreenState extends State<MealDetailsScreen> {
-  bool _isFavorite = false;
+  late final Function(Meal) _toggleFavorite;
+  late final bool Function(Meal) _isFavoriteF;
+  late bool _isFavorite;
+  @override
+  initState() {
+    super.initState();
+    _toggleFavorite = widget._toggleFavorite;
+    _isFavoriteF = widget._isFavorite;
+  }
   Widget _titlegenerator(BuildContext context, String title) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -33,14 +44,15 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
       child: child,
     );
   }
+  late final Meal meal = ModalRoute.of(context)!.settings.arguments as Meal;
   void _changeFavorite(){
     setState(() {
-      _isFavorite = !_isFavorite;
+      _toggleFavorite(meal);
     });
   }
   @override
   Widget build(BuildContext context) {
-    final Meal meal = ModalRoute.of(context)!.settings.arguments as Meal;
+    _isFavorite = _isFavoriteF(meal);
     return Scaffold(
         appBar: AppBar(
           title: Text(meal.title),

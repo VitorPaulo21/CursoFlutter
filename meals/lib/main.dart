@@ -6,11 +6,9 @@ import 'package:meals/data/dummy_data.dart';
 import 'package:meals/models/meal.dart';
 import 'package:meals/models/settings.dart';
 import 'package:meals/screens/categories_meals_screen.dart';
-import 'package:meals/screens/categories_screen.dart';
 import 'package:meals/screens/meal_details_screen.dart';
 import 'package:meals/screens/settings_screen.dart';
 import 'package:meals/screens/tab_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,6 +20,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Settings settings = Settings();
   List<Meal> _avaliableMeals = DUMMY_MEALS;
+  final List<Meal> _favoriteMeals = [];
   void _filterMeals(Settings settings) {
     this.settings = settings;
     _avaliableMeals = DUMMY_MEALS.where((element) {
@@ -35,7 +34,17 @@ class _MyAppState extends State<MyApp> {
           !filtroVegetarian;
     }).toList();
   }
+void _toggleFavorite(Meal meal) {
+    if (_containInFavorite(meal)) {
+      _favoriteMeals.remove(meal);
+    } else {
+      _favoriteMeals.add(meal);
+    }
+  }
 
+  bool _containInFavorite(Meal meal) {
+    return _favoriteMeals.contains(meal);
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -63,10 +72,11 @@ class _MyAppState extends State<MyApp> {
               onError: Theme.of(context).colorScheme.onError,
               brightness: Theme.of(context).colorScheme.brightness)),
       routes: {
-        AppRoutes.HOME: (_) => const TabScreen(),
+        AppRoutes.HOME: (_) => TabScreen(_favoriteMeals),
         AppRoutes.CATEGORIES_MEALS: (_) =>
             CategoriesMealsScreen(_avaliableMeals),
-        AppRoutes.MEALS_DETAILS: (_) => MealDetailsScreen(),
+        AppRoutes.MEALS_DETAILS: (_) =>
+            MealDetailsScreen(_toggleFavorite, _containInFavorite),
         AppRoutes.SETTINGS: (_) => SettingsScreen(settings, _filterMeals),
       },
     );
