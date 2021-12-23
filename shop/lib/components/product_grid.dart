@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shop/components/product_item.dart';
 import 'package:shop/models/product.dart';
@@ -25,9 +26,9 @@ class ProductGrid extends StatelessWidget {
           child: const ProductItem(),
         );
       },
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 3 / 2,
+        childAspectRatio: kIsWeb ? (3 / 2) : (3 / 4),
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
       ),

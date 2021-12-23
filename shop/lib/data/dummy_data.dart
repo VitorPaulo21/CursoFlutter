@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:shop/models/product.dart';
 
 List<Product> DUMMY_PRODUCTS = [
@@ -30,6 +33,8 @@ List<Product> DUMMY_PRODUCTS = [
     description: 'Prepare any meal you want.',
     price: 49.99,
     imageUrl:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
+    kIsWeb
+        ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg'
+        : "https://cdn.leroymerlin.com.br/products/panela_wok_antiaderente_28_cm_3,4_litros_easy_vermelho_brinox_1567625076_0c5b_600x600.jpg",
   ),
 ];
