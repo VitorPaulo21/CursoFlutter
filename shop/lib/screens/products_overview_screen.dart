@@ -1,32 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:shop/components/product_item.dart';
-import 'package:shop/data/dummy_data.dart';
-import 'package:shop/models/product.dart';
+import 'package:shop/components/product_grid.dart';
+import 'package:provider/provider.dart';
+import 'package:shop/models/product_list.dart';
 
-class ProductOverviewPage extends StatelessWidget {
+enum FilterOptions { favorites, all }
+
+class ProductOverviewPage extends StatefulWidget {
   const ProductOverviewPage({Key? key}) : super(key: key);
 
   @override
+  State<ProductOverviewPage> createState() => _ProductOverviewPageState();
+}
+
+bool _showOnlyFavorites = false;
+
+class _ProductOverviewPageState extends State<ProductOverviewPage> {
+  @override
   Widget build(BuildContext context) {
-    List<Product> loadedProducts = DUMMY_PRODUCTS;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Minha Loja"),
+        actions: [
+          Consumer<ProductList>(
+            builder: (ctx, productList, _) => PopupMenuButton(
+              itemBuilder: (_) => const [
+                PopupMenuItem(
+                  child: Text("Mostrar somente Favoritos"),
+                  value: FilterOptions.favorites,
+                ),
+                PopupMenuItem(
+                  child: Text("Mostrar Todos"),
+                  value: FilterOptions.all,
+                )
+              ],
+              onSelected: (selected) {
+                if (selected == FilterOptions.favorites) {
+                  setState(() {
+                    _showOnlyFavorites = true;
+                  });
+                } else {
+                  setState(() {
+                    _showOnlyFavorites = false;
+                  });
+                }
+              },
+            ),
+          )
+        ],
         centerTitle: true,
       ),
-      body: GridView.builder(
-        padding: const EdgeInsets.all(10),
-        itemCount: loadedProducts.length,
-        itemBuilder: (ctx, i) {
-          return ProductItem(product: loadedProducts[i]);
-        },
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 3 / 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-        ),
-      ),
+      body: ProductGrid(_showOnlyFavorites),
     );
   }
 }
+
