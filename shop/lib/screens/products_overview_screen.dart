@@ -13,19 +13,17 @@ class ProductOverviewPage extends StatelessWidget {
         title: const Text("Minha Loja"),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: GridView.builder(
-          itemCount: loadedProducts.length,
-          itemBuilder: (ctx, i) {
-            return Text(loadedProducts[i].title);
-          },
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 3 / 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-          ),
+      body: GridView.builder(
+        padding: const EdgeInsets.all(10),
+        itemCount: loadedProducts.length,
+        itemBuilder: (ctx, i) {
+          return Text(loadedProducts[i].title);
+        },
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 3 / 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
         ),
       ),
     );
