@@ -11,7 +11,10 @@ class Cart with ChangeNotifier {
     return _items.length;
   }
 
-  void addItem(Product product) {
+  void addItem(Product? product) {
+    if (product == null) {
+      return;
+    }
     if (_items.containsKey(product.id)) {
       _items.update(product.id,
           (existent) => existent.copyWith(quantity: existent.quantity + 1));
@@ -28,9 +31,29 @@ class Cart with ChangeNotifier {
       );
     }
     notifyListeners();
-    print(itemsCount);
   }
 
+  void reduceItem(Product? product) {
+    if (product == null) {
+      notifyListeners();
+      return;
+    }
+    if (_items.containsKey(product.id)) {
+      if (_items[product.id]!.quantity == 1) {
+        removeItem(product.id);
+        notifyListeners();
+        return;
+      }
+      _items.update(product.id, (existent) {
+        return existent.copyWith(quantity: existent.quantity - 1);
+      });
+    }
+    notifyListeners();
+  }
+
+  Map<String, CartItem> get items {
+    return {..._items};
+  }
   double get totalAmount {
     double total = 0;
     _items.forEach((key, value) {

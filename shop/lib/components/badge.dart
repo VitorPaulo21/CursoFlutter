@@ -28,7 +28,7 @@ class Badge extends StatelessWidget {
                     top: 12,
                     right: 0,
                     child: CircleAvatar(
-                      radius: 6,
+                      radius: int.parse(num) > 99 ? 9 : 6,
                       foregroundColor: Colors.white,
                       child: Text(
                         num,
