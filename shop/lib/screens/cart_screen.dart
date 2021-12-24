@@ -3,6 +3,7 @@ import 'package:shop/components/item_cart_widget.dart';
 import 'package:shop/models/cart.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/models/cart_item.dart';
+import 'package:shop/models/order_list.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -40,13 +41,21 @@ class CartScreen extends StatelessWidget {
                     backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
                   const Spacer(),
-                  TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        "Comprar",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
-                      )),
+                  Consumer<OrderList>(
+                    child: const Text(
+                      "COMPRAR",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    builder: (ctx, orderList, child) => TextButton(
+                        onPressed: cart.itemsCount > 0
+                            ? () {
+                                orderList.addOrder(cart);
+                                cart.clear();
+                              }
+                            : null,
+                        child: child!),
+                  ),
                 ],
               ),
             ),
